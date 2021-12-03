@@ -13,5 +13,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="jar/fontawesomefx-commons-9.1.2.jar"/>
 	<classpathentry kind="lib" path="jar/fontawesomefx-fontawesome-4.7.0-9.1.2.jar"/>
+	<classpathentry kind="lib" path="jar/mysql-connector-java-8.0.21.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

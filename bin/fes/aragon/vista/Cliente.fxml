@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</AnchorPane>
-
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="317.0" prefWidth="600.0" style="-fx-background-color: #F97255;" type="Pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fes.aragon.controlador.ClienteController">
+   <children>
+      <TableView fx:id="tblTablaCliente" layoutX="22.0" layoutY="100.0" prefHeight="200.0" prefWidth="556.0">
+        <columns>
+          <TableColumn fx:id="clienteID" prefWidth="70.0" text="ID" />
+          <TableColumn fx:id="clienteNombre" prefWidth="190.0" text="Nombre" />
+            <TableColumn fx:id="clienteApellidoPaterno" prefWidth="201.0" text="Apellido Paterno" />
+            <TableColumn fx:id="comando" prefWidth="94.0" text="Editar/Eliminar" />
+        </columns>
+      </TableView>
+      <FontAwesomeIconView fill="#5dd581" glyphName="USER_PLUS" layoutX="37.0" layoutY="78.0" onMouseClicked="#nuevoCliente" size="25" />
+      <FontAwesomeIconView fill="#5dd581" glyphName="REFRESH" layoutX="71.0" layoutY="78.0" onMouseClicked="#refrescar" size="25" />
+      <Label layoutX="19.0" layoutY="7.0" text="Cliente">
+         <font>
+            <Font name="Verdana" size="30.0" />
+         </font></Label>
+   </children>
+</fx:root>

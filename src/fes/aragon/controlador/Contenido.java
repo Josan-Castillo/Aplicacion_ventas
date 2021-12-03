@@ -9,7 +9,6 @@ public class Contenido extends Pane{
 	public Contenido(String ruta) {
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(ruta));
 		fxml.setRoot(this);
-		fxml.setController(this);
 		try {
 			fxml.load();
 		} catch (IOException e) {
