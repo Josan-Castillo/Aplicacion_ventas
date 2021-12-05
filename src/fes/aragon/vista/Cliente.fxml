@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -17,8 +18,14 @@
             <TableColumn fx:id="comando" prefWidth="94.0" text="Editar/Eliminar" />
         </columns>
       </TableView>
-      <FontAwesomeIconView fill="#5dd581" glyphName="USER_PLUS" layoutX="37.0" layoutY="78.0" onMouseClicked="#nuevoCliente" size="25" />
-      <FontAwesomeIconView fill="#5dd581" glyphName="REFRESH" layoutX="71.0" layoutY="78.0" onMouseClicked="#refrescar" size="25" />
+      <FontAwesomeIconView fill="#5dd581" glyphName="USER_PLUS" layoutX="37.0" layoutY="78.0" onMouseClicked="#nuevoCliente" size="25">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor></FontAwesomeIconView>
+      <FontAwesomeIconView fill="#5dd581" glyphName="REFRESH" layoutX="71.0" layoutY="78.0" onMouseClicked="#refrescar" size="25">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor></FontAwesomeIconView>
       <Label layoutX="19.0" layoutY="7.0" text="Cliente">
          <font>
             <Font name="Verdana" size="30.0" />

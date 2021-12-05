@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import fes.aragon.modelo.Clientes;
 import javafx.collections.FXCollections;
@@ -46,5 +45,41 @@ public class Conexion {
 		conexion.close();
 		
 		return lista;
+	}
+	
+	public void almacenarClientes(Clientes cliente) throws SQLException {
+		String query = "{call insertarClientes(?,?)}";
+		CallableStatement solicitud = conexion.prepareCall(query);
+		
+		solicitud.setString(1, cliente.getNombre());
+		solicitud.setString(2, cliente.getApellidoPaterno());
+		solicitud.execute();
+
+		solicitud.close();
+		conexion.close();
+	}
+	
+	public void eliminarClientes(int id) throws SQLException {
+		String query = "{call eliminarClientes(?)}";
+		CallableStatement solicitud = conexion.prepareCall(query);
+		
+		solicitud.setInt(1, id);
+		solicitud.execute();
+
+		solicitud.close();
+		conexion.close();
+	}
+	
+	public void modificarClientes(Clientes cliente) throws SQLException {
+		String query = "{call modificarClientes(?,?,?)}";
+		CallableStatement solicitud = conexion.prepareCall(query);
+		
+		solicitud.setInt(1, cliente.getId());
+		solicitud.setString(2, cliente.getNombre());
+		solicitud.setString(3, cliente.getApellidoPaterno());
+		solicitud.execute();
+
+		solicitud.close();
+		conexion.close();
 	}
 }

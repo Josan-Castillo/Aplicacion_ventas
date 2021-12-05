@@ -1,7 +1,7 @@
 package fes.aragon.controlador;
 
+import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -9,13 +9,21 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fes.aragon.modelo.Clientes;
 import fes.aragon.mysql.Conexion;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
 public class ClienteController implements Initializable {
@@ -37,12 +45,26 @@ public class ClienteController implements Initializable {
 
     @FXML
     void nuevoCliente(MouseEvent event) {
-
+    	try {
+			Parent parent = FXMLLoader.load(getClass().getResource("/fes/aragon/vista/NuevoUsuario.fxml"));
+			Scene escena = new Scene(parent);
+			Stage escenario = new Stage();
+			
+			escenario.initModality(Modality.APPLICATION_MODAL);
+			escenario.initOwner(tblTablaCliente.getScene().getWindow());
+			escenario.setScene(escena);
+			escenario.initStyle(StageStyle.UTILITY);
+			escenario.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     }
 
     @FXML
     void refrescar(MouseEvent event) {
-
+    	this.traerDatos();
     }
 
 	@Override
@@ -65,21 +87,26 @@ public class ClienteController implements Initializable {
 						setText(null);
 					} else {
 						FontAwesomeIconView borrarIcono = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
-						FontAwesomeIconView modificarIcono = new FontAwesomeIconView(FontAwesomeIcon.PENCIL_SQUARE);
+						FontAwesomeIconView modificarIcono = new FontAwesomeIconView(FontAwesomeIcon.PENCIL);
 						
-						borrarIcono.setStyle("-fx-cursor:hand;"
-						+"-glyph-size:25px;"
-								+"-fx-fill:#F97255");
-						modificarIcono.setStyle("-fx-cursor:hand;"
-								+"-glyph-size:25px;"
-										+"-fx-fill:#F97255");
+						borrarIcono.setGlyphStyle("-fx-fill:#F97255;-glyph-size:25px;-fx-cursor:hand;");
+						modificarIcono.setGlyphStyle("-fx-fill:#F97255;-glyph-size:25px;-fx-cursor:hand;");
 						
 						borrarIcono.setOnMouseClicked((MouseEvent evento)->{
-							System.out.println("Evento Borrar");	
+							Clientes cliente = tblTablaCliente.getSelectionModel().getSelectedItem();
+							borrar(cliente.getId());
 						});
 						modificarIcono.setOnMouseClicked((MouseEvent evento)->{
-							System.out.println("Evento Modificar");	
+							Clientes cliente = tblTablaCliente.getSelectionModel().getSelectedItem();
+							
+							modificarCliente(cliente);
 						});
+						HBox hbox = new HBox(borrarIcono, modificarIcono);
+						hbox.setStyle("-fx-alignment:center");
+						HBox.setMargin(borrarIcono, new Insets(2, 2, 0, 3));
+						HBox.setMargin(modificarIcono, new Insets(2, 3, 0, 2));
+						setGraphic(hbox);
+						setText(null);
 					}
 				}
 				
@@ -93,6 +120,7 @@ public class ClienteController implements Initializable {
 	private void traerDatos() {
 		try {
 			Conexion cnn = new Conexion();
+			this.tblTablaCliente.getItems().clear();
 			this.tblTablaCliente.setItems(cnn.todosClientes());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -103,5 +131,40 @@ public class ClienteController implements Initializable {
 			alerta.showAndWait();
 			e.printStackTrace();
 		}		
+	}
+	
+	private void borrar(int id) {
+		try {
+			Conexion cnn = new Conexion();
+			
+			cnn.eliminarClientes(id);
+			this.traerDatos();
+		} catch (Exception e) {
+			Alert alerta = new Alert(Alert.AlertType.WARNING);
+			alerta.setTitle("Problema en B.D");
+			alerta.setHeaderText("Error en la aplicacion");
+			alerta.setContentText("Consulta al fabricante, por favor.");
+			alerta.showAndWait();
+			e.printStackTrace();
+		}
+	}
+	
+	private void modificarCliente(Clientes cliente) {
+		try {
+			FXMLLoader alta = new FXMLLoader(getClass().getResource("/fes/aragon/vista/NuevoUsuario.fxml"));
+			Parent parent = (Parent)alta.load();
+			((NuevoClienteController)alta.getController()).modificarCliente(cliente);
+			Scene escena = new Scene(parent);
+			Stage escenario = new Stage();
+			
+			escenario.initModality(Modality.APPLICATION_MODAL);
+			escenario.initOwner(tblTablaCliente.getScene().getWindow());
+			escenario.setScene(escena);
+			escenario.initStyle(StageStyle.UTILITY);
+			escenario.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
