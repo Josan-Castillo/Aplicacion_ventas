@@ -89,7 +89,6 @@ public class NuevoClienteController {
     	this.cliente = cliente;
     	this.txtNombre.setText(cliente.getNombre());
     	this.txtApellido.setText(cliente.getApellidoPaterno());
-    	
     }
     
     private void modificar() {

@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="Pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="317.0" prefWidth="600.0" style="-fx-background-color: #F97255;" type="Pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fes.aragon.controlador.FacturaController">
    <children>
-      <Label layoutX="189.0" layoutY="99.0" text="FACTURAS">
+      <TableView fx:id="tblTablaFactura" layoutX="22.0" layoutY="100.0" prefHeight="200.0" prefWidth="556.0">
+        <columns>
+          <TableColumn fx:id="facturaID" prefWidth="59.0" text="ID" />
+            <TableColumn fx:id="clienteID" prefWidth="67.0" text="ID Cliente" />
+          <TableColumn fx:id="facturaReferencia" prefWidth="218.0" text="Referencia" />
+            <TableColumn fx:id="facturaFecha" prefWidth="102.0" text="Fecha" />
+            <TableColumn fx:id="comando" prefWidth="109.0" text="Editar/Eliminar" />
+        </columns>
+      </TableView>
+      <FontAwesomeIconView fill="#5dd581" glyphName="FILE" layoutX="37.0" layoutY="78.0" onMouseClicked="#nuevaFactura" size="25">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></FontAwesomeIconView>
+      <FontAwesomeIconView fill="#5dd581" glyphName="REFRESH" layoutX="71.0" layoutY="78.0" onMouseClicked="#refrescarFact" size="25">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></FontAwesomeIconView>
+      <Label layoutX="19.0" layoutY="7.0" text="Facturas">
          <font>
-            <Font size="47.0" />
-         </font>
-      </Label>
+            <Font name="Verdana" size="30.0" />
+         </font></Label>
    </children>
 </fx:root>

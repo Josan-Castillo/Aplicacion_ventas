@@ -20,13 +20,13 @@
       </TableView>
       <FontAwesomeIconView fill="#5dd581" glyphName="USER_PLUS" layoutX="37.0" layoutY="78.0" onMouseClicked="#nuevoCliente" size="25">
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="HAND" />
          </cursor></FontAwesomeIconView>
       <FontAwesomeIconView fill="#5dd581" glyphName="REFRESH" layoutX="71.0" layoutY="78.0" onMouseClicked="#refrescar" size="25">
          <cursor>
-            <Cursor fx:constant="DEFAULT" />
+            <Cursor fx:constant="HAND" />
          </cursor></FontAwesomeIconView>
-      <Label layoutX="19.0" layoutY="7.0" text="Cliente">
+      <Label layoutX="19.0" layoutY="7.0" text="Clientes">
          <font>
             <Font name="Verdana" size="30.0" />
          </font></Label>
