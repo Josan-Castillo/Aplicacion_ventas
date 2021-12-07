@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import fes.aragon.modelo.Clientes;
 import fes.aragon.modelo.Facturas;
+import fes.aragon.modelo.Productos;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -147,6 +148,70 @@ public class Conexion {
 		solicitud.setInt(1, factura.getIdCliente());
 		solicitud.setString(2, factura.getReferencia());
 		solicitud.setDate(3, java.sql.Date.valueOf(factura.getFecha()));
+		solicitud.execute();
+
+		solicitud.close();
+		conexion.close();
+	}
+	
+	//Productos
+	
+	public ObservableList<Productos> todosProductos() throws SQLException{
+		ObservableList<Productos> lista = FXCollections.observableArrayList();
+		String query = "{call todosProductos()}";
+		CallableStatement solicitud = conexion.prepareCall(query);
+		ResultSet datos = solicitud.executeQuery();
+		
+		if(!datos.next()) {
+			System.out.println("No hay datos");
+		} else {
+			do {
+				Productos prod = new Productos();
+				
+				prod.setId(Integer.parseInt(datos.getString(1)));
+				prod.setNombre(datos.getString(2));
+				prod.setPrecio(Double.parseDouble(datos.getString(3)));
+				
+				lista.add(prod);
+			} while(datos.next());
+		}
+		datos.close();
+		solicitud.close();
+		conexion.close();
+		
+		return lista;
+	}
+	
+	public void almacenarProductos(Productos producto) throws SQLException {
+		String query = "{call insertarProductos(?,?)}";
+		CallableStatement solicitud = conexion.prepareCall(query);
+		
+		solicitud.setString(1, producto.getNombre());
+		solicitud.setDouble(2, producto.getPrecio());
+		solicitud.execute();
+
+		solicitud.close();
+		conexion.close();
+	}
+	
+	public void eliminarProductos(int id) throws SQLException {
+		String query = "{call eliminarProductos(?)}";
+		CallableStatement solicitud = conexion.prepareCall(query);
+		
+		solicitud.setInt(1, id);
+		solicitud.execute();
+
+		solicitud.close();
+		conexion.close();
+	}
+	
+	public void modificarProductos(Productos cliente) throws SQLException {
+		String query = "{call modificarProductos(?,?,?)}";
+		CallableStatement solicitud = conexion.prepareCall(query);
+		
+		solicitud.setInt(1, cliente.getId());
+		solicitud.setString(2, cliente.getNombre());
+		solicitud.setDouble(3, cliente.getPrecio());
 		solicitud.execute();
 
 		solicitud.close();
