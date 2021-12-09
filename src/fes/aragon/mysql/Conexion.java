@@ -100,11 +100,13 @@ public class Conexion {
 		} else {
 			do {
 				Facturas fac = new Facturas();
-				
+								
 				fac.setId(Integer.parseInt(datos.getString(1)));
-				fac.setIdCliente(Integer.parseInt(datos.getString(2)));
-				fac.setReferencia(datos.getString(3));
-				fac.setFecha(datos.getDate(4).toLocalDate());
+				fac.setReferencia(datos.getString(2));
+				fac.setFecha(datos.getDate(3).toLocalDate());
+				
+				Clientes cl = new Clientes(Integer.parseInt(datos.getString(4)), datos.getString(5), datos.getString(6));
+				fac.setCliente(cl);
 				
 				lista.add(fac);
 			} while(datos.next());
@@ -113,6 +115,30 @@ public class Conexion {
 		solicitud.close();
 		conexion.close();
 		
+		return lista;
+	}
+	
+	public ObservableList<Clientes> buscarClientes(String patron) throws SQLException {
+		ObservableList<Clientes> lista = FXCollections.observableArrayList();
+		String query = "{call buscarClientes(?)}";
+		CallableStatement solicitud = conexion.prepareCall(query);		
+		solicitud.setString(1, patron);		
+		ResultSet datos=solicitud.executeQuery();
+		if (!datos.next()) {
+			System.out.println("No hay datos");
+		} else {
+			do {
+				Clientes cl = new Clientes();
+				cl.setId(Integer.parseInt(datos.getString(1)));
+				cl.setNombre(datos.getString(2));
+				cl.setApellidoPaterno(datos.getString(3));
+				lista.add(cl);
+			} while (datos.next());
+
+		}
+		datos.close();
+		solicitud.close();
+		conexion.close();
 		return lista;
 	}
 	
@@ -132,7 +158,7 @@ public class Conexion {
 		CallableStatement solicitud = conexion.prepareCall(query);
 		
 		solicitud.setInt(1, factura.getId());
-		solicitud.setInt(2, factura.getIdCliente());
+		solicitud.setInt(2, factura.getCliente().getId());
 		solicitud.setString(3, factura.getReferencia());
 		solicitud.setDate(4, java.sql.Date.valueOf(factura.getFecha()));
 		solicitud.execute();
@@ -145,7 +171,7 @@ public class Conexion {
 		String query = "{call insertarFacturas(?,?,?)}";
 		CallableStatement solicitud = conexion.prepareCall(query);
 		
-		solicitud.setInt(1, factura.getIdCliente());
+		solicitud.setInt(1, factura.getCliente().getId());
 		solicitud.setString(2, factura.getReferencia());
 		solicitud.setDate(3, java.sql.Date.valueOf(factura.getFecha()));
 		solicitud.execute();

@@ -4,20 +4,20 @@ import java.time.LocalDate;
 
 public class Facturas {
 	private Integer id;
-	private Integer idCliente;
 	private String referencia;
 	private LocalDate fecha;
+	Clientes cliente = new Clientes();
 	
 	public Facturas() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Facturas(Integer id, Integer idCliente, String referencia, LocalDate fecha) {
+	public Facturas(Integer id, Integer idCliente, String referencia, LocalDate fecha, Clientes cliente) {
 		super();
 		this.id = id;
-		this.idCliente = idCliente;
 		this.referencia = referencia;
 		this.fecha = fecha;
+		this.cliente = cliente;
 	}
 
 	public Integer getId() {
@@ -26,14 +26,6 @@ public class Facturas {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getIdCliente() {
-		return idCliente;
-	}
-
-	public void setIdCliente(Integer idCliente) {
-		this.idCliente = idCliente;
 	}
 
 	public String getReferencia() {
@@ -50,5 +42,21 @@ public class Facturas {
 
 	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
+	}
+
+	public Clientes getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Clientes cliente) {
+		this.cliente = cliente;
+	}
+
+	public String getNombreCliente() {
+		return this.cliente.getNombre();
+	}
+	
+	public String getApellidoCliente() {
+		return this.cliente.getApellidoPaterno();
 	}
 }

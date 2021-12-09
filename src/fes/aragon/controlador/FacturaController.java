@@ -2,11 +2,12 @@ package fes.aragon.controlador;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import fes.aragon.modelo.Clientes;
 import fes.aragon.modelo.Facturas;
 import fes.aragon.mysql.Conexion;
 import javafx.fxml.FXML;
@@ -30,7 +31,10 @@ import javafx.util.Callback;
 public class FacturaController implements Initializable {
 
     @FXML
-    private TableColumn<Facturas, Integer> clienteID;
+    private TableColumn<Clientes, String> clienteApellido;
+
+    @FXML
+    private TableColumn<Clientes, String> clienteNombre;
 
     @FXML
     private TableColumn<Facturas, String> comando;
@@ -66,17 +70,18 @@ public class FacturaController implements Initializable {
     }
 
     @FXML
-    void refrescarFact(MouseEvent event) {
-    	this.traerDatosFact();
+    void refrescar(MouseEvent event) {
+    	this.traerDatos();
     }
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		this.facturaID.setCellValueFactory(new PropertyValueFactory<>("id"));
-		this.clienteID.setCellValueFactory(new PropertyValueFactory<>("idCliente"));
 		this.facturaReferencia.setCellValueFactory(new PropertyValueFactory<>("referencia"));
 		this.facturaFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+		this.clienteNombre.setCellValueFactory(new PropertyValueFactory<>("nombreCliente"));
+		this.clienteApellido.setCellValueFactory(new PropertyValueFactory<>("apellidoCliente"));
 				
 		Callback<TableColumn<Facturas, String>, TableCell<Facturas, String>>
 		celda = (TableColumn<Facturas, String> parametros) -> {
@@ -99,7 +104,7 @@ public class FacturaController implements Initializable {
 						borrarIcono.setOnMouseClicked((MouseEvent evento)->{
 							Facturas factura = tblTablaFactura.getSelectionModel().getSelectedItem();
 							
-							borrarFact(factura.getId());
+							borrar(factura.getId());
 						});
 						modificarIcono.setOnMouseClicked((MouseEvent evento)->{
 							Facturas factura = tblTablaFactura.getSelectionModel().getSelectedItem();
@@ -118,10 +123,10 @@ public class FacturaController implements Initializable {
 			return cel;
 		};
 		this.comando.setCellFactory(celda);
-		this.traerDatosFact();
+		this.traerDatos();
 	}
-
-	private void traerDatosFact() {
+	
+	private void traerDatos() {
 		try {
 			Conexion cnn = new Conexion();
 			this.tblTablaFactura.getItems().clear();
@@ -137,12 +142,12 @@ public class FacturaController implements Initializable {
 		}		
 	}
 	
-	private void borrarFact(int id) {
+	private void borrar(int id) {
 		try {
 			Conexion cnn = new Conexion();
 			
 			cnn.eliminarFacturas(id);
-			this.traerDatosFact();
+			this.traerDatos();
 		} catch (Exception e) {
 			Alert alerta = new Alert(Alert.AlertType.WARNING);
 			alerta.setTitle("Problema en B.D");
@@ -155,9 +160,9 @@ public class FacturaController implements Initializable {
 	
 	private void modificarFactura(Facturas factura) {
 		try {
-			FXMLLoader alta = new FXMLLoader(getClass().getResource("/fes/aragon/vista/NuevaFactura.fxml"));
+			FXMLLoader alta = new FXMLLoader(getClass().getResource("/fes/aragon/vista/ModificarFactura.fxml"));
 			Parent parent = (Parent)alta.load();
-			((NuevaFacturaController)alta.getController()).modificarFactura(factura);
+			((ModificarFacturaController)alta.getController()).modificarFactura(factura);
 			Scene escena = new Scene(parent);
 			Stage escenario = new Stage();
 			

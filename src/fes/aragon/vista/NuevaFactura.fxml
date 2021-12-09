@@ -4,12 +4,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="235.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fes.aragon.controlador.NuevaFacturaController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fes.aragon.controlador.NuevaFacturaController">
    <children>
       <HBox prefHeight="63.0" prefWidth="600.0">
          <children>
@@ -21,23 +23,6 @@
                   <Insets left="15.0" top="10.0" />
                </HBox.margin>
             </Label>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="600.0">
-         <children>
-            <Label prefHeight="21.0" prefWidth="102.0" text="ID del cliente:">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="83.0" top="7.0" />
-               </HBox.margin>
-            </Label>
-            <TextField fx:id="txtIdCliente" prefHeight="25.0" prefWidth="341.0">
-               <HBox.margin>
-                  <Insets top="6.0" />
-               </HBox.margin>
-            </TextField>
          </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="600.0">
@@ -80,7 +65,46 @@
             </DatePicker>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="57.0" prefWidth="600.0" spacing="50.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="600.0">
+         <children>
+            <Label prefHeight="21.0" prefWidth="105.0" text="Buscar Cliente:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="83.0" top="7.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="txtnombreClienteBuscar" prefHeight="25.0" prefWidth="232.0">
+               <HBox.margin>
+                  <Insets top="6.0" />
+               </HBox.margin>
+            </TextField>
+            <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarCliente" text="Buscar">
+               <HBox.margin>
+                  <Insets left="16.0" top="3.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="152.0" prefWidth="600.0">
+         <children>
+            <TableView fx:id="tblTablaCliente" prefHeight="141.0" prefWidth="473.0">
+               <columns>
+                  <TableColumn fx:id="clienteID" prefWidth="75.0" text="ID" />
+                  <TableColumn fx:id="clienteNombre" prefWidth="195.0" text="Nombre" />
+                  <TableColumn fx:id="clienteApellidoPaterno" prefWidth="202.0" text="Apellido Paterno" />
+               </columns>
+            </TableView>
+         </children>
+         <padding>
+            <Insets top="11.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="63.0" prefWidth="600.0" spacing="50.0">
          <children>
             <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardarAccion" text="Guardar">
                <font>

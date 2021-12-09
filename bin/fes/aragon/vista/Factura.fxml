@@ -8,22 +8,23 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="317.0" prefWidth="600.0" style="-fx-background-color: #F97255;" type="Pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fes.aragon.controlador.FacturaController">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="325.0" prefWidth="650.0" style="-fx-background-color: #F97255;" type="Pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fes.aragon.controlador.FacturaController">
    <children>
-      <TableView fx:id="tblTablaFactura" layoutX="22.0" layoutY="100.0" prefHeight="200.0" prefWidth="556.0">
+      <TableView fx:id="tblTablaFactura" layoutX="14.0" layoutY="98.0" prefHeight="213.0" prefWidth="624.0">
         <columns>
           <TableColumn fx:id="facturaID" prefWidth="59.0" text="ID" />
-            <TableColumn fx:id="clienteID" prefWidth="67.0" text="ID Cliente" />
-          <TableColumn fx:id="facturaReferencia" prefWidth="218.0" text="Referencia" />
-            <TableColumn fx:id="facturaFecha" prefWidth="102.0" text="Fecha" />
-            <TableColumn fx:id="comando" prefWidth="109.0" text="Editar/Eliminar" />
+          <TableColumn fx:id="facturaReferencia" prefWidth="118.0" text="Referencia" />
+            <TableColumn fx:id="facturaFecha" prefWidth="105.0" text="Fecha" />
+            <TableColumn fx:id="clienteNombre" prefWidth="124.0" text="Nombre" />
+            <TableColumn fx:id="clienteApellido" prefWidth="124.0" text="Apellido" />
+            <TableColumn fx:id="comando" prefWidth="93.0" text="Editar/Eliminar" />
         </columns>
       </TableView>
       <FontAwesomeIconView fill="#5dd581" glyphName="FILE" layoutX="37.0" layoutY="78.0" onMouseClicked="#nuevaFactura" size="25">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></FontAwesomeIconView>
-      <FontAwesomeIconView fill="#5dd581" glyphName="REFRESH" layoutX="71.0" layoutY="78.0" onMouseClicked="#refrescarFact" size="25">
+      <FontAwesomeIconView fill="#5dd581" glyphName="REFRESH" layoutX="71.0" layoutY="78.0" onMouseClicked="#refrescar" size="25">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></FontAwesomeIconView>

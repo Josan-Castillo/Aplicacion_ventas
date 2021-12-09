@@ -17,7 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class NuevaFacturaController implements Initializable {
+public class ModificarFacturaController implements Initializable {
 
     @FXML
     private Button btnBuscar;
@@ -44,12 +44,18 @@ public class NuevaFacturaController implements Initializable {
     private TableView<Clientes> tblTablaCliente;
 
     @FXML
+    private TextField txtApellidoCliente;
+
+    @FXML
+    private TextField txtNombreCliente;
+
+    @FXML
     private TextField txtReferencia;
 
     @FXML
     private TextField txtnombreClienteBuscar;
     
-    private Facturas factura = new Facturas();
+    private Facturas factura = null;
 
     @FXML
     void accionLimpiar(ActionEvent event) {
@@ -88,7 +94,7 @@ public class NuevaFacturaController implements Initializable {
 			factura.setReferencia(txtReferencia.getText());
 			factura.setFecha(pickDate.getValue());
 			
-			cnn.almacenarFacturas(factura);
+			cnn.modificarFacturas(factura);
 			
 			alerta.setHeaderText("Factura almacenada");
     		alerta.setContentText("La factura se almaceno correctamente");
@@ -110,18 +116,21 @@ public class NuevaFacturaController implements Initializable {
 		this.clienteID.setCellValueFactory(new PropertyValueFactory<>("id"));
 		this.clienteNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 		this.clienteApellidoPaterno.setCellValueFactory(new PropertyValueFactory<>("apellidoPaterno"));
-		
 		this.tblTablaCliente.getSelectionModel().selectedItemProperty().addListener((obj, oldSeleccion, newSeleccion) -> {
 			if (newSeleccion != null) {
 				Clientes cl = tblTablaCliente.getSelectionModel().getSelectedItem();
-								
+				
+				txtNombreCliente.setText(cl.getNombre());
+				txtApellidoCliente.setText(cl.getApellidoPaterno());
+				
 				factura.setCliente(cl);
+				
 			}
 		});		
 		
 		this.traerDatos();
 	}
-	
+
 	private void traerDatos() {
 		try {
 			Conexion cnn = new Conexion();
@@ -138,7 +147,17 @@ public class NuevaFacturaController implements Initializable {
 		}		
 	}
 	
+	public void modificarFactura(Facturas factura) {
+    	this.factura = factura;
+    	this.txtNombreCliente.setText(factura.getCliente().getNombre());
+    	this.txtApellidoCliente.setText(factura.getCliente().getApellidoPaterno());
+    	this.txtReferencia.setText(factura.getReferencia());
+    	this.pickDate.setValue(factura.getFecha());
+    }
+	
 	private void limpiar() {
+    	this.txtNombreCliente.setText("");
+    	this.txtApellidoCliente.setText("");
     	this.txtReferencia.setText("");
     	this.pickDate.setValue(null);
     	this.txtnombreClienteBuscar.setText("");
