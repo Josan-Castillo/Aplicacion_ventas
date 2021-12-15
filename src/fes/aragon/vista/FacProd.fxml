@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="317.0" prefWidth="620.0" style="-fx-background-color: #F97255;" type="Pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fes.aragon.controlador.FacProdController">
+   <children>
+      <TableView fx:id="tblTablaFacProd" layoutX="4.0" layoutY="100.0" prefHeight="213.0" prefWidth="612.0">
+        <columns>
+          <TableColumn fx:id="referenciaFactura" prefWidth="117.0" text="Referencia" />
+          <TableColumn fx:id="fechaFactura" prefWidth="112.0" text="Fecha" />
+            <TableColumn fx:id="nombreProducto" prefWidth="160.0" text="Nombre" />
+            <TableColumn fx:id="precioProducto" prefWidth="65.0" text="Precio" />
+            <TableColumn fx:id="cantidadFacProd" prefWidth="59.0" text="Cantidad" />
+            <TableColumn fx:id="comando" prefWidth="95.0" text="Editar/Eliminar" />
+        </columns>
+      </TableView>
+      <FontAwesomeIconView fill="#5dd581" glyphName="PLUS" layoutX="37.0" layoutY="78.0" onMouseClicked="#nuevaFacProd" size="25">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></FontAwesomeIconView>
+      <FontAwesomeIconView fill="#5dd581" glyphName="REFRESH" layoutX="71.0" layoutY="78.0" onMouseClicked="#refrescar" size="25">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></FontAwesomeIconView>
+      <Label layoutX="19.0" layoutY="7.0" text="Facturas Productos">
+         <font>
+            <Font name="Verdana" size="30.0" />
+         </font></Label>
+   </children>
+</fx:root>

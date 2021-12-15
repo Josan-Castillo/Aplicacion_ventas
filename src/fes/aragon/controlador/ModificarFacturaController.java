@@ -69,12 +69,20 @@ public class ModificarFacturaController implements Initializable {
     		alerta.setHeaderText("Dato incorrecto");
 			alerta.setContentText("Ingresa el nombre del cliente a buscar");
 			alerta.showAndWait();
+			this.traerDatos();
     	} else {
     		try {
     		Conexion cnn = new Conexion();
     		
     		this.tblTablaCliente.getItems().clear();
 			this.tblTablaCliente.setItems(cnn.buscarClientes(this.txtnombreClienteBuscar.getText()));
+			if(tblTablaCliente.getItems().isEmpty()) {
+				Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+    			alerta.setHeaderText("Error al buscar el cliente");
+    			alerta.setContentText("El cliente no existe");
+    			alerta.showAndWait();
+    			this.traerDatos();
+				}
     		} catch (Exception e) {
     			Alert alerta = new Alert(Alert.AlertType.INFORMATION);
     			alerta.setHeaderText("Error al buscar el cliente");
@@ -96,9 +104,8 @@ public class ModificarFacturaController implements Initializable {
 			
 			cnn.modificarFacturas(factura);
 			
-			alerta.setHeaderText("Factura almacenada");
-    		alerta.setContentText("La factura se almaceno correctamente");
-    		limpiar();
+			alerta.setHeaderText("Factura modificada");
+    		alerta.setContentText("La factura se modifico correctamente");
     		      	
 			alerta.showAndWait();
 		} catch (Exception e) {

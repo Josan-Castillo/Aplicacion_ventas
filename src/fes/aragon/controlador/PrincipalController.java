@@ -16,7 +16,7 @@ public class PrincipalController {
 
     @FXML
     void accionFactProd(ActionEvent event) {
-    	Contenido contenido = new Contenido("/fes/aragon/vista/FactProd.fxml");
+    	Contenido contenido = new Contenido("/fes/aragon/vista/FacProd.fxml");
     	IdPrincipal.setCenter(contenido);
     }
 

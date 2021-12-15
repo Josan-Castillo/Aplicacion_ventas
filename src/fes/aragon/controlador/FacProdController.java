@@ -2,12 +2,14 @@ package fes.aragon.controlador;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import fes.aragon.modelo.Clientes;
+import fes.aragon.modelo.FacProd;
+import fes.aragon.modelo.Facturas;
+import fes.aragon.modelo.Productos;
 import fes.aragon.mysql.Conexion;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +18,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -28,38 +29,42 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
-public class ClienteController implements Initializable {
-	
-	@FXML
-	private TableView<Clientes> tblTablaCliente;
+public class FacProdController implements Initializable {
 
     @FXML
-    private TableColumn<Clientes, String> clienteApellidoPaterno;
+    private TableColumn<FacProd, Integer> cantidadFacProd;
 
     @FXML
-    private TableColumn<Clientes, Integer> clienteID;
+    private TableColumn<FacProd, String> comando;
 
     @FXML
-    private TableColumn<Clientes, String> clienteNombre;
+    private TableColumn<Facturas, Date> fechaFactura;
 
     @FXML
-    private TableColumn<Clientes, String> comando;
+    private TableColumn<Productos, String> nombreProducto;
 
     @FXML
-    void nuevoCliente(MouseEvent event) {
-    	try {	
-    		
-    		Parent parent = FXMLLoader.load(getClass().getResource("/fes/aragon/vista/NuevoUsuario.fxml"));
-    		Scene escena = new Scene(parent);
-    		Stage escenario = new Stage();
-    		
+    private TableColumn<Productos, Double> precioProducto;
+
+    @FXML
+    private TableColumn<Facturas, String> referenciaFactura;
+
+    @FXML
+    private TableView<FacProd> tblTablaFacProd;
+
+    @FXML
+    void nuevaFacProd(MouseEvent event) {
+    	try {
+			Parent parent = FXMLLoader.load(getClass().getResource("/fes/aragon/vista/NuevaFacProd.fxml"));
+			Scene escena = new Scene(parent);
+			Stage escenario = new Stage();
+			
 			escenario.initModality(Modality.APPLICATION_MODAL);
-			escenario.initOwner(tblTablaCliente.getScene().getWindow());
+			escenario.initOwner(tblTablaFacProd.getScene().getWindow());
 			escenario.setScene(escena);
 			escenario.initStyle(StageStyle.UTILITY);
 			escenario.show();
-			
-			} catch (IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -73,13 +78,15 @@ public class ClienteController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		this.clienteID.setCellValueFactory(new PropertyValueFactory<>("id"));
-		this.clienteNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-		this.clienteApellidoPaterno.setCellValueFactory(new PropertyValueFactory<>("apellidoPaterno"));
-		
-		Callback<TableColumn<Clientes, String>, TableCell<Clientes, String>>
-		celda = (TableColumn<Clientes, String> parametros) -> {
-			final TableCell<Clientes, String> cel = new TableCell<Clientes, String> () {
+		this.referenciaFactura.setCellValueFactory(new PropertyValueFactory<>("referencia"));
+		this.fechaFactura.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+		this.nombreProducto.setCellValueFactory(new PropertyValueFactory<>("nombreProd"));
+		this.precioProducto.setCellValueFactory(new PropertyValueFactory<>("precioProd"));
+		this.cantidadFacProd.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+				
+		Callback<TableColumn<FacProd, String>, TableCell<FacProd, String>>
+		celda = (TableColumn<FacProd, String> parametros) -> {
+			final TableCell<FacProd, String> cel = new TableCell<FacProd, String> () {
 
 				@Override
 				protected void updateItem(String arg0, boolean arg1) {
@@ -91,28 +98,19 @@ public class ClienteController implements Initializable {
 					} else {
 						FontAwesomeIconView borrarIcono = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
 						FontAwesomeIconView modificarIcono = new FontAwesomeIconView(FontAwesomeIcon.PENCIL);
-						
+								
 						borrarIcono.setGlyphStyle("-fx-fill:#F97255;-glyph-size:25px;-fx-cursor:hand;");
 						modificarIcono.setGlyphStyle("-fx-fill:#F97255;-glyph-size:25px;-fx-cursor:hand;");
-						
+								
 						borrarIcono.setOnMouseClicked((MouseEvent evento)->{
-							Clientes cliente = tblTablaCliente.getSelectionModel().getSelectedItem();
+							FacProd facprod = tblTablaFacProd.getSelectionModel().getSelectedItem();
 							
-							Alert confir = new Alert(Alert.AlertType.CONFIRMATION);
-							
-							confir.setHeaderText("Eliminar Cliente");
-							confir.setContentText("Se eliminaran todos los registros que esten vinculados con este cliente.");
-							
-							Optional<ButtonType> res = confir.showAndWait();
-							
-							if (res.get() == ButtonType.OK) {
-								borrar(cliente.getId());
-							}
+							borrar(facprod.getFactura().getId(), facprod.getProducto().getId());
 						});
 						modificarIcono.setOnMouseClicked((MouseEvent evento)->{
-							Clientes cliente = tblTablaCliente.getSelectionModel().getSelectedItem();
-							
-							modificarCliente(cliente);
+							FacProd facprod = tblTablaFacProd.getSelectionModel().getSelectedItem();
+									
+							modificarFacProd(facprod);
 						});
 						HBox hbox = new HBox(borrarIcono, modificarIcono);
 						hbox.setStyle("-fx-alignment:center");
@@ -121,8 +119,7 @@ public class ClienteController implements Initializable {
 						setGraphic(hbox);
 						setText(null);
 					}
-				}
-				
+				}				
 			};
 			return cel;
 		};
@@ -133,8 +130,8 @@ public class ClienteController implements Initializable {
 	private void traerDatos() {
 		try {
 			Conexion cnn = new Conexion();
-			this.tblTablaCliente.getItems().clear();
-			this.tblTablaCliente.setItems(cnn.todosClientes());
+			this.tblTablaFacProd.getItems().clear();
+			this.tblTablaFacProd.setItems(cnn.todosFacProd());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Alert alerta = new Alert(Alert.AlertType.WARNING);
@@ -146,11 +143,11 @@ public class ClienteController implements Initializable {
 		}		
 	}
 	
-	private void borrar(int id) {
+	private void borrar(int id_fac, int id_prod) {
 		try {
 			Conexion cnn = new Conexion();
 			
-			cnn.eliminarClientes(id);
+			cnn.eliminarFacProd(id_fac, id_prod);
 			this.traerDatos();
 		} catch (Exception e) {
 			Alert alerta = new Alert(Alert.AlertType.WARNING);
@@ -162,16 +159,16 @@ public class ClienteController implements Initializable {
 		}
 	}
 	
-	private void modificarCliente(Clientes cliente) {
+	private void modificarFacProd(FacProd facprod) {
 		try {
-			FXMLLoader alta = new FXMLLoader(getClass().getResource("/fes/aragon/vista/NuevoUsuario.fxml"));
+			FXMLLoader alta = new FXMLLoader(getClass().getResource("/fes/aragon/vista/ModificarFacProd.fxml"));
 			Parent parent = (Parent)alta.load();
-			((NuevoClienteController)alta.getController()).modificarCliente(cliente);
+			((ModificarFacProdController)alta.getController()).modificarFacProd(facprod);
 			Scene escena = new Scene(parent);
 			Stage escenario = new Stage();
 			
 			escenario.initModality(Modality.APPLICATION_MODAL);
-			escenario.initOwner(tblTablaCliente.getScene().getWindow());
+			escenario.initOwner(tblTablaFacProd.getScene().getWindow());
 			escenario.setScene(escena);
 			escenario.initStyle(StageStyle.UTILITY);
 			escenario.show();
@@ -180,4 +177,5 @@ public class ClienteController implements Initializable {
 			e.printStackTrace();
 		}
 	}
+
 }

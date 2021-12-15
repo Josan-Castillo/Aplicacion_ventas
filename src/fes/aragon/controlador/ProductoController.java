@@ -2,6 +2,7 @@ package fes.aragon.controlador;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -15,6 +16,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -94,7 +96,16 @@ public class ProductoController implements Initializable {
 						borrarIcono.setOnMouseClicked((MouseEvent evento)->{
 							Productos producto = tblTablaProducto.getSelectionModel().getSelectedItem();
 							
-							borrar(producto.getId());
+							Alert confir = new Alert(Alert.AlertType.CONFIRMATION);
+							
+							confir.setHeaderText("Eliminar Producto");
+							confir.setContentText("Se eliminaran todos los registros que esten vinculados con este producto.");
+							
+							Optional<ButtonType> res = confir.showAndWait();
+							
+							if (res.get() == ButtonType.OK) {
+								borrar(producto.getId()); 
+							}
 						});
 						modificarIcono.setOnMouseClicked((MouseEvent evento)->{
 							Productos producto = tblTablaProducto.getSelectionModel().getSelectedItem();

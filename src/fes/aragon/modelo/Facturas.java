@@ -12,7 +12,7 @@ public class Facturas {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Facturas(Integer id, Integer idCliente, String referencia, LocalDate fecha, Clientes cliente) {
+	public Facturas(Integer id, String referencia, LocalDate fecha, Clientes cliente) {
 		super();
 		this.id = id;
 		this.referencia = referencia;

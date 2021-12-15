@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fes.aragon.controlador.ModificarFacturaController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fes.aragon.controlador.ModificarFacturaController">
    <children>
       <HBox prefHeight="63.0" prefWidth="600.0">
          <children>
@@ -111,6 +111,21 @@
             <Insets />
          </opaqueInsets>
       </HBox>
+      <HBox prefHeight="38.0" prefWidth="600.0">
+         <children>
+            <Label contentDisplay="CENTER" prefHeight="21.0" prefWidth="353.0" text="Elija un cliente en caso de que quiera modificarlo:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="600.0">
          <children>
             <Label prefHeight="21.0" prefWidth="105.0" text="Buscar Cliente:">
@@ -150,7 +165,7 @@
             <Insets top="11.0" />
          </padding>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="65.0" prefWidth="600.0" spacing="50.0">
+      <HBox alignment="CENTER" prefHeight="58.0" prefWidth="600.0" spacing="50.0">
          <children>
             <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardarAccion" text="Guardar">
                <font>

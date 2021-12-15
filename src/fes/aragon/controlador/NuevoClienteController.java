@@ -7,9 +7,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 
 public class NuevoClienteController {
 
+	@FXML
+	private VBox ventana;
+	
     @FXML
     private Button btnGuardar;
 
@@ -42,13 +46,13 @@ public class NuevoClienteController {
     			alerta.setHeaderText("Cliente almacenado");
     			alerta.setContentText("El cliente se almaceno correctamente");
     			limpiar();
-    		} else {
+     			} else {
     			modificar();
     			alerta.setHeaderText("Cliente modificado");
     			alerta.setContentText("El cliente se modifico correctamente");
     		}        	
 			alerta.showAndWait();
-    	}    	
+    	} 
     }
     
     private void almacenar() {

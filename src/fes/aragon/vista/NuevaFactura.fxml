@@ -65,6 +65,21 @@
             </DatePicker>
          </children>
       </HBox>
+      <HBox prefHeight="38.0" prefWidth="600.0">
+         <children>
+            <Label contentDisplay="CENTER" prefHeight="21.0" prefWidth="257.0" text="Elija la factura correspondiente:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="600.0">
          <children>
             <Label prefHeight="21.0" prefWidth="105.0" text="Buscar Cliente:">

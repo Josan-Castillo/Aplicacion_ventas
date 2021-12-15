@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import fes.aragon.modelo.Clientes;
+import fes.aragon.modelo.FacProd;
 import fes.aragon.modelo.Facturas;
 import fes.aragon.modelo.Productos;
 import javafx.collections.FXCollections;
@@ -87,6 +88,30 @@ public class Conexion {
 		conexion.close();
 	}
 	
+	public ObservableList<Clientes> buscarClientes(String patron) throws SQLException {
+		ObservableList<Clientes> lista = FXCollections.observableArrayList();
+		String query = "{call buscarClientes(?)}";
+		CallableStatement solicitud = conexion.prepareCall(query);		
+		solicitud.setString(1, patron);		
+		ResultSet datos=solicitud.executeQuery();
+		if (!datos.next()) {
+			System.out.println("No hay datos");
+		} else {
+			do {
+				Clientes cl = new Clientes();
+				cl.setId(Integer.parseInt(datos.getString(1)));
+				cl.setNombre(datos.getString(2));
+				cl.setApellidoPaterno(datos.getString(3));
+				lista.add(cl);
+			} while (datos.next());
+
+		}
+		datos.close();
+		solicitud.close();
+		conexion.close();
+		return lista;
+	}
+	
 	//Facturas
 	
 	public ObservableList<Facturas> todasFacturas() throws SQLException{
@@ -115,30 +140,6 @@ public class Conexion {
 		solicitud.close();
 		conexion.close();
 		
-		return lista;
-	}
-	
-	public ObservableList<Clientes> buscarClientes(String patron) throws SQLException {
-		ObservableList<Clientes> lista = FXCollections.observableArrayList();
-		String query = "{call buscarClientes(?)}";
-		CallableStatement solicitud = conexion.prepareCall(query);		
-		solicitud.setString(1, patron);		
-		ResultSet datos=solicitud.executeQuery();
-		if (!datos.next()) {
-			System.out.println("No hay datos");
-		} else {
-			do {
-				Clientes cl = new Clientes();
-				cl.setId(Integer.parseInt(datos.getString(1)));
-				cl.setNombre(datos.getString(2));
-				cl.setApellidoPaterno(datos.getString(3));
-				lista.add(cl);
-			} while (datos.next());
-
-		}
-		datos.close();
-		solicitud.close();
-		conexion.close();
 		return lista;
 	}
 	
@@ -178,6 +179,35 @@ public class Conexion {
 
 		solicitud.close();
 		conexion.close();
+	}
+	
+	public ObservableList<Facturas> buscarFacturas(String patron) throws SQLException {
+		ObservableList<Facturas> lista = FXCollections.observableArrayList();
+		String query = "{call buscarFacturas(?)}";
+		CallableStatement solicitud = conexion.prepareCall(query);		
+		solicitud.setString(1, patron);		
+		ResultSet datos=solicitud.executeQuery();
+		if (!datos.next()) {
+			System.out.println("No hay datos");
+		} else {
+			do {
+				Facturas fac = new Facturas();
+				
+				fac.setId(Integer.parseInt(datos.getString(1)));
+				fac.setReferencia(datos.getString(2));
+				fac.setFecha(datos.getDate(3).toLocalDate());
+				
+				Clientes cl = new Clientes(Integer.parseInt(datos.getString(4)), datos.getString(5), datos.getString(6));
+				fac.setCliente(cl);
+				
+				lista.add(fac);
+			} while (datos.next());
+
+		}
+		datos.close();
+		solicitud.close();
+		conexion.close();
+		return lista;
 	}
 	
 	//Productos
@@ -238,6 +268,113 @@ public class Conexion {
 		solicitud.setInt(1, cliente.getId());
 		solicitud.setString(2, cliente.getNombre());
 		solicitud.setDouble(3, cliente.getPrecio());
+		solicitud.execute();
+
+		solicitud.close();
+		conexion.close();
+	}
+	
+	public ObservableList<Productos> buscarProductos(String patron) throws SQLException {
+		ObservableList<Productos> lista = FXCollections.observableArrayList();
+		String query = "{call buscarProductos(?)}";
+		CallableStatement solicitud = conexion.prepareCall(query);		
+		solicitud.setString(1, patron);		
+		ResultSet datos=solicitud.executeQuery();
+		if (!datos.next()) {
+			System.out.println("No hay datos");
+		} else {
+			do {
+				Productos prod = new Productos();
+				
+				prod.setId(Integer.parseInt(datos.getString(1)));
+				prod.setNombre(datos.getString(2));
+				prod.setPrecio(Double.parseDouble(datos.getString(3)));
+				
+				lista.add(prod);
+			} while (datos.next());
+
+		}
+		datos.close();
+		solicitud.close();
+		conexion.close();
+		return lista;
+	}
+	
+	//Facturas - Productos
+	
+	public ObservableList<FacProd> todosFacProd() throws SQLException{
+		ObservableList<FacProd> lista = FXCollections.observableArrayList();
+		String query = "{call todosFacProd()}";
+		CallableStatement solicitud = conexion.prepareCall(query);
+		ResultSet datos = solicitud.executeQuery();
+		
+		if(!datos.next()) {
+			System.out.println("No hay datos");
+		} else {
+			do {
+				Facturas fac = new Facturas();
+				
+				fac.setId(Integer.parseInt(datos.getString(1)));
+				fac.setReferencia(datos.getString(2));
+				fac.setFecha(datos.getDate(3).toLocalDate());
+				
+				Clientes cl = new Clientes(Integer.parseInt(datos.getString(4)), datos.getString(5), datos.getString(6));
+				
+				fac.setCliente(cl);
+				
+				Productos prod = new Productos();
+				
+				prod.setId(Integer.parseInt(datos.getString(7)));
+				prod.setNombre(datos.getString(8));
+				prod.setPrecio(Double.parseDouble(datos.getString(9)));
+				
+				FacProd facprod = new FacProd();
+				
+				facprod.setFactura(fac);
+				facprod.setProducto(prod);
+				facprod.setCantidad(Double.parseDouble(datos.getString(10)));
+					
+				lista.add(facprod);
+			} while(datos.next());
+		}
+		datos.close();
+		solicitud.close();
+		conexion.close();
+		
+		return lista;
+	}
+		
+	public void almacenarFacProd(FacProd facprod) throws SQLException {
+		String query = "{call insertarFacProd(?,?,?)}";
+		CallableStatement solicitud = conexion.prepareCall(query);
+		
+		solicitud.setInt(1, facprod.getFactura().getId());
+		solicitud.setInt(2, facprod.getProducto().getId());
+		solicitud.setDouble(3, facprod.getCantidad());
+		solicitud.execute();
+
+		solicitud.close();
+		conexion.close();
+	}
+	
+	public void eliminarFacProd(int id_fac, int id_prod) throws SQLException {
+		String query = "{call eliminarFacProd(?, ?)}";
+		CallableStatement solicitud = conexion.prepareCall(query);
+		
+		solicitud.setInt(1, id_fac);
+		solicitud.setInt(2, id_prod);
+		solicitud.execute();
+		solicitud.close();
+		conexion.close();
+	}
+	
+	public void modificarFacProd(FacProd facprod) throws SQLException {
+		String query = "{call modificarFacProd(?,?,?)}";
+		CallableStatement solicitud = conexion.prepareCall(query);
+		
+		solicitud.setInt(1, facprod.getFactura().getId());
+		solicitud.setInt(2, facprod.getProducto().getId());
+		solicitud.setDouble(3, facprod.getCantidad());
 		solicitud.execute();
 
 		solicitud.close();

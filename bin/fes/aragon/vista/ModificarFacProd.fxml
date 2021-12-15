@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="fes.aragon.controlador.ModificarFacProdController">
+   <content>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="778.0" prefWidth="584.0">
+         <children>
+            <HBox prefHeight="18.0" prefWidth="561.0">
+               <children>
+                  <Label text="Modificar Factura Producto">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="17.0" prefWidth="561.0">
+               <children>
+                  <Label text="Datos Factura:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="561.0">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="102.0" text="Referencia:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="84.0" />
+                     </HBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Label>
+                  <TextField fx:id="txtReferencia" editable="false" prefHeight="25.0" prefWidth="346.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+            <HBox prefHeight="31.0" prefWidth="561.0">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="102.0" text="Fecha:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="84.0" top="3.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtFecha" editable="false">
+                     <HBox.margin>
+                        <Insets top="3.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="561.0">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="102.0" text="Nombre:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="84.0" top="3.0" />
+                     </HBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Label>
+                  <TextField fx:id="txtNombreCliente" editable="false" prefHeight="25.0" prefWidth="346.0">
+                     <HBox.margin>
+                        <Insets top="3.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="561.0">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="102.0" text="Apellido:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="84.0" top="3.0" />
+                     </HBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Label>
+                  <TextField fx:id="txtApellidoCliente" editable="false" prefHeight="25.0" prefWidth="346.0">
+                     <HBox.margin>
+                        <Insets top="3.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="561.0">
+               <children>
+                  <Label contentDisplay="CENTER" prefHeight="21.0" prefWidth="257.0" text="Elija la factura correspondiente:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets left="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="561.0">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="105.0" text="Buscar Factura:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="83.0" top="3.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtFacturaBuscar" prefHeight="25.0" prefWidth="232.0">
+                     <HBox.margin>
+                        <Insets top="3.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="btnBuscarFactura" mnemonicParsing="false" onAction="#buscarFactura" text="Buscar">
+                     <HBox.margin>
+                        <Insets left="16.0" top="3.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="152.0" prefWidth="600.0">
+               <padding>
+                  <Insets top="11.0" />
+               </padding>
+               <children>
+                  <TableView fx:id="tblTablaFactura" prefHeight="141.0" prefWidth="530.0">
+                     <columns>
+                        <TableColumn fx:id="facturaID" prefWidth="59.0" text="ID" />
+                        <TableColumn fx:id="facturaReferencia" prefWidth="118.0" text="Referencia" />
+                        <TableColumn fx:id="facturaFecha" prefWidth="105.0" text="Fecha" />
+                        <TableColumn fx:id="clienteNombre" prefWidth="124.0" text="Nombre" />
+                        <TableColumn fx:id="clienteApellido" prefWidth="124.0" text="Apellido" />
+                     </columns>
+                  </TableView>
+               </children>
+            </HBox>
+            <HBox prefHeight="26.0" prefWidth="561.0">
+               <children>
+                  <Label text="Datos Producto:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="23.0" prefWidth="561.0">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="84.0" text="Nombre:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="83.0" top="3.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtNombre" editable="false" prefHeight="25.0" prefWidth="341.0">
+                     <HBox.margin>
+                        <Insets top="3.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox prefHeight="29.0" prefWidth="561.0">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="85.0" text="Precio:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="83.0" top="3.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtPrecio" editable="false" prefHeight="25.0" prefWidth="130.0">
+                     <HBox.margin>
+                        <Insets top="3.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox prefHeight="26.0" prefWidth="561.0">
+               <children>
+                  <Label contentDisplay="CENTER" prefHeight="21.0" prefWidth="257.0" text="Elije el producto correspondiente:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets left="10.0" top="3.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="18.0" prefWidth="561.0">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="122.0" text="Buscar producto:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="69.0" top="3.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtProductoBuscar" prefHeight="25.0" prefWidth="232.0">
+                     <HBox.margin>
+                        <Insets top="3.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="btnBuscarProducto" mnemonicParsing="false" onAction="#buscarProducto" text="Buscar">
+                     <HBox.margin>
+                        <Insets left="16.0" top="3.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="152.0" prefWidth="600.0">
+               <padding>
+                  <Insets top="11.0" />
+               </padding>
+               <children>
+                  <TableView fx:id="tblTablaProducto" prefHeight="141.0" prefWidth="462.0">
+                     <columns>
+                        <TableColumn fx:id="productoID" prefWidth="70.0" text="ID" />
+                        <TableColumn fx:id="productoNombre" prefWidth="233.0" text="Nombre" />
+                        <TableColumn fx:id="productoPrecio" prefWidth="158.0" text="Precio" />
+                     </columns>
+                  </TableView>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="561.0">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="102.0" text="Cantidad:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="84.0" top="5.0" />
+                     </HBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Label>
+                  <TextField fx:id="txtCantidad" prefHeight="25.0" prefWidth="94.0">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="561.0" spacing="50.0">
+               <children>
+                  <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardarAccion" text="Guardar">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnLimpiar" mnemonicParsing="false" onAction="#accionLimpiar" text="Limpiar">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>
